@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>Welcome to Your Dashboard</h1>
+<h2>Your Archives</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Country</th>
+        <th>Visit Date</th>
+        <th>Photo</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="archive : ${archives}">
+        <td th:text="${archive.title}"></td>
+        <td th:text="${archive.description}"></td>
+        <td th:text="${archive.country.name}"></td>
+        <td th:text="${archive.visitDate}"></td>
+        <td><img th:src="${archive.photoUrl}" alt="Photo" width="100"></td>
+    </tr>
+    </tbody>
+</table>
+<h3>Add New Archive</h3>
+<form th:action="@{/dashboard/add}" method="post">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+    <br>
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+    <br>
+    <label for="country">Country:</label>
+    <select id="country" name="countryId" required>
+        <option th:each="country : ${countries}"
+                th:value="${country.id}"
+                th:text="${country.name}"></option>
+    </select>
+    <br>
+    <label for="visitDate">Visit Date:</label>
+    <input type="date" id="visitDate" name="visitDate" required>
+    <br>
+    <label for="photoUrl">Photo URL:</label>
+    <input type="text" id="photoUrl" name="photoUrl">
+    <br>
+    <button type="submit">Add Archive</button>
+</form>
+</body>
+</html>
